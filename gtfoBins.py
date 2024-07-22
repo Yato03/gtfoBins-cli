@@ -68,9 +68,15 @@ with open("binaries.txt", "r", encoding="utf-8") as file:
     alguno = False
     for binary in binaries:
         directories = binary.split("/")
-        b = directories[-1] + "<"
-        if b in soup.get_text():
-            log.success("SUID Vulnerable: " + binary)
+        b = directories[-1]
+        el = soup.find("a", string=b)
+        
+        if el is not None:
+            tr = el.find_parent("tr")
+            ul = tr.find("ul", attrs={"class": "function-list"})
+            a = ul.find_all("a")
+            problems = ",".join([a.text for a in a])
+            log.success("SUID Vulnerable: " + binary + "->" + problems)
             alguno = True
 
 if not alguno:
