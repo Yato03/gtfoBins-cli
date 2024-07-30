@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.firefox.options import Options
@@ -74,6 +76,9 @@ if __name__ == '__main__':
             # Coger solo el nombre del binario. Ej: /usr/bin/whoami -> whoami
             directories = binary.split("/")
             b = directories[-1]
+
+            if b == "":
+                continue
 
             # Ej: <a>whoami</a>
             el = soup.find("a", string=b)
